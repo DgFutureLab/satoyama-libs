@@ -223,23 +223,46 @@ void PCF2127::readTimestampTime(uint8_t *hour, uint8_t *minutes, uint8_t *second
 
 */
 /**************************************************************************/
-void PCF2127::alarmEnb(uint8_t almTimeEnb, uint8_t almDayEnb, uint8_t almWeekdayEnb)
+void PCF2127::alarmDisable(uint8_t almTimeDisable, uint8_t almDayDisable, uint8_t almWeekdayDisable)
 {
-    if (almTimeEnb)
+    if (almTimeDisable)
     {
         write(PCF_HOUR_ALM, 1<<7);
         write(PCF_MINUTE_ALM, 1<<7);
         write(PCF_SECOND_ALM, 1<<7);
     }
 
-    if (almDayEnb)
+    if (almDayDisable)
     {
         write(PCF_DAY_ALM, 1<<7);
     }
 
-    if (almWeekdayEnb)
+    if (almWeekdayDisable)
     {
         write(PCF_WEEKDAY_ALM, 1<<7);
+    }
+
+    // enable alarm interrupt enable
+    readModWriteBit(PCF_CONTROL_2, BIT_AIE, 0);    
+}
+
+void PCF2127::alarmEnb(uint8_t almTimeEnb, uint8_t almDayEnb, uint8_t almWeekdayEnb)
+{
+    if (almTimeEnb)
+    {
+        write(PCF_HOUR_ALM, 0<<7);
+        write(PCF_MINUTE_ALM, 0<<7);
+        write(PCF_SECOND_ALM, 0<<7);
+    }
+
+    if (almDayEnb)
+    {
+        write(PCF_DAY_ALM, 0<<7);
+    }
+
+    if (almWeekdayEnb)
+    {
+        write(PCF_WEEKDAY_ALM, 0<<7);
     }
 
     // enable alarm interrupt enable
@@ -265,13 +288,6 @@ void PCF2127::alarmReadTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
     *minutes = bcdDecode(read(PCF_MINUTE_ALM) & PCF_MINUTES_MASK);
     *seconds = bcdDecode(read(PCF_SECOND_ALM) & PCF_SECONDS_MASK);
 }
-
-// void PCF2127::readTimestampTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
-// {
-//     *hour = bcdDecode(read(PCF_HOUR_TIMESTP));
-//     *minutes = bcdDecode(read(PCF_MIN_TIMESTP));
-//     *seconds = bcdDecode(read(PCF_SEC_TIMESTP));
-// }
 
 
 /**************************************************************************/

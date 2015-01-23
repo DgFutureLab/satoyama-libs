@@ -170,6 +170,7 @@ public:
     void readTimestampTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds);
 
     void alarmEnb(uint8_t almTimeEnb, uint8_t almDayEnb, uint8_t almWeekdayEnb = 0);
+    void alarmDisable(uint8_t almTimeDisable, uint8_t almDayDisable, uint8_t almWeekdayDisable = 0);
     void alarmWriteDate(uint8_t day, uint8_t weekday = 0);
     void alarmWriteTime(uint8_t hour, uint8_t minutes, uint8_t seconds);
     void alarmReadTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds);
