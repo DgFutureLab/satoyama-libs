@@ -54,7 +54,7 @@
 
 */
 /**************************************************************************/
-PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs)
+PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp)
 {
     uint8_t tmp;
 
@@ -76,6 +76,7 @@ PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs)
 
     tmp = 0;
     tmp = (hourMode) ? (tmp | (1<<2)) : (tmp & ~(1<<2)); 
+    *temp = tmp;
     write(PCF_CONTROL_1, tmp);
 }
 
@@ -126,8 +127,8 @@ void PCF2127::writeTime(uint8_t hours, uint8_t minutes, uint8_t seconds)
 void PCF2127::readTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
 {
     *hour = bcdDecode(read(PCF_HOURS));
-    *minutes = bcdDecode(read(PCF_MINUTES));
-    *seconds = bcdDecode(read(PCF_SECONDS));
+    *minutes = bcdDecode(read(PCF_MINUTES) & PCF_MINUTES_MASK);
+    *seconds = bcdDecode(read(PCF_SECONDS) & PCF_SECONDS_MASK);
 }
 
 /**************************************************************************/
@@ -198,6 +199,8 @@ void PCF2127::timestampTrig()
 /**************************************************************************/
 void PCF2127::readTimestampDate(uint8_t *year, uint8_t *month, uint8_t *day)
 {
+
+
     *year = bcdDecode(read(PCF_YEAR_TIMESTP));
     *month = bcdDecode(read(PCF_MON_TIMESTP));
     *day = bcdDecode(read(PCF_DAY_TIMESTP));
@@ -211,8 +214,8 @@ void PCF2127::readTimestampDate(uint8_t *year, uint8_t *month, uint8_t *day)
 void PCF2127::readTimestampTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
 {
     *hour = bcdDecode(read(PCF_HOUR_TIMESTP));
-    *minutes = bcdDecode(read(PCF_MIN_TIMESTP));
-    *seconds = bcdDecode(read(PCF_SEC_TIMESTP));
+    *minutes = bcdDecode(read(PCF_MIN_TIMESTP) & PCF_MINUTES_MASK);
+    *seconds = bcdDecode(read(PCF_SEC_TIMESTP) & PCF_SECONDS_MASK);
 }
 
 /**************************************************************************/
@@ -251,9 +254,25 @@ void PCF2127::alarmEnb(uint8_t almTimeEnb, uint8_t almDayEnb, uint8_t almWeekday
 void PCF2127::alarmWriteTime(uint8_t hour, uint8_t minutes, uint8_t seconds)
 {
     write(PCF_HOUR_ALM, hour);
-    write(PCF_MINUTE_ALM, minutes);
-    write(PCF_SECOND_ALM, seconds);
+    write(PCF_MINUTE_ALM, bcdEncode(minutes));
+    write(PCF_SECOND_ALM, bcdEncode(seconds));
 }
+
+
+void PCF2127::alarmReadTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
+{
+    *hour = bcdDecode(read(PCF_HOUR_ALM));
+    *minutes = bcdDecode(read(PCF_MINUTE_ALM) & PCF_MINUTES_MASK);
+    *seconds = bcdDecode(read(PCF_SECOND_ALM) & PCF_SECONDS_MASK);
+}
+
+// void PCF2127::readTimestampTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds)
+// {
+//     *hour = bcdDecode(read(PCF_HOUR_TIMESTP));
+//     *minutes = bcdDecode(read(PCF_MIN_TIMESTP));
+//     *seconds = bcdDecode(read(PCF_SEC_TIMESTP));
+// }
+
 
 /**************************************************************************/
 /*!
