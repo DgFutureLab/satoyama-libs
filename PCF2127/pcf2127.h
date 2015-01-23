@@ -84,6 +84,10 @@ enum
     BIT_BIE                 = 1,
     BIT_BLIE                = 0,
 
+    /*
+        Register addresses
+    */
+
     PCF_SECONDS             = 0x03,
     PCF_MINUTES             = 0x04,
     PCF_HOURS               = 0x05,
@@ -115,7 +119,13 @@ enum
     PCF_RAM_ADDR_MSB        = 0x1A,
     PCF_RAM_ADDR_LSB        = 0x1B,
     PCF_RAM_WRT_CMD         = 0x1C,
-    PCF_RAM_RD_CMD          = 0x1D
+    PCF_RAM_RD_CMD          = 0x1D,
+
+    /*
+        REGISTER MASKS
+    */
+    PCF_SECONDS_MASK        = 127,
+    PCF_MINUTES_MASK        = 127
 };
 
 class PCF2127
@@ -148,7 +158,7 @@ public:
         SATURDAY    = 6
     };
 
-    PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs);
+    PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp);
     void writeTime(uint8_t hour, uint8_t minutes, uint8_t seconds);
     void readTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds);
     void writeDate(uint8_t year, uint8_t month, uint8_t day, uint8_t weekday);
@@ -162,6 +172,7 @@ public:
     void alarmEnb(uint8_t almTimeEnb, uint8_t almDayEnb, uint8_t almWeekdayEnb = 0);
     void alarmWriteDate(uint8_t day, uint8_t weekday = 0);
     void alarmWriteTime(uint8_t hour, uint8_t minutes, uint8_t seconds);
+    void alarmReadTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds);
 
     void timerInit(uint8_t mode, uint8_t src);
     void timerLoad(uint8_t val);
