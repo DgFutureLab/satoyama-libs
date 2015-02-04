@@ -190,6 +190,14 @@ public:
     uint8_t bcdEncode(uint8_t val);
     uint8_t bcdDecode(uint8_t val);
 
+    /*
+        High level functions for using the RTC
+    */
+    void PCF2127::setInterruptToPulse();
+    void PCF2127::setInterruptToPermanent();
+    void PCF2127::enableSecondInterrupt();
+    void PCF2127::enableMinuteInterrupt();
+
 private:
     int deviceAddr;
     uint8_t i2cEnb;

@@ -487,6 +487,47 @@ void PCF2127::readModWriteBit(uint8_t addr, uint8_t pos, uint8_t val)
 
 */
 /**************************************************************************/
+
+
+void PCF2127::setInterruptToPulse(){
+  byte reg_10h = read(PCF_WATCHDOG_TIM_CTL);
+  reg_10h |= B00100000;
+  write(PCF_WATCHDOG_TIM_CTL, reg_10h);
+}
+
+void PCF2127::setInterruptToPermanent(){
+  byte reg_10h = read(PCF_WATCHDOG_TIM_CTL);
+  reg_10h &= B11011111;
+  write(PCF_WATCHDOG_TIM_CTL, reg_10h);
+}
+
+
+void PCF2127::enableSecondInterrupt(){
+  byte RC1 = read(PCF_CONTROL_1);
+  setControlBit(&RC1, BIT_MI, 0); // disable minute interrupt
+  setControlBit(&RC1, BIT_SI, 1); // enable second interrupt
+  write(PCF_CONTROL_1, RC1);
+}  
+
+void PCF2127::enableMinuteInterrupt(){
+  byte RC1 = read(PCF_CONTROL_1);
+  setControlBit(&RC1, BIT_MI, 1); // enable minute interrupt
+  setControlBit(&RC1, BIT_SI, 0); // disable second interrupt
+  write(PCF_CONTROL_1, RC1);
+}  
+
+
+
+
+
+
+
+
+
+
+
+
+
 //ISR(PCF2127_INTP)
 //{
 //}
