@@ -488,6 +488,17 @@ void PCF2127::readModWriteBit(uint8_t addr, uint8_t pos, uint8_t val)
 */
 /**************************************************************************/
 
+void PCF2127::setControlBit(){
+
+
+}
+
+void setControlBit(uint8_t *controlByte, uint8_t registerBit, bool value){
+  /*
+
+  */
+  *controlByte |= (value<<registerBit);
+}
 
 void PCF2127::setInterruptToPulse(){
   byte reg_10h = read(PCF_WATCHDOG_TIM_CTL);

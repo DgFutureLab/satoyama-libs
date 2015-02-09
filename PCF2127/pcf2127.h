@@ -193,10 +193,12 @@ public:
     /*
         High level functions for using the RTC
     */
+    void PCF2127::setControlBit(uint8_t *controlByte, uint8_t registerBit, bool value);
     void PCF2127::setInterruptToPulse();
     void PCF2127::setInterruptToPermanent();
-    void PCF2127::enableSecondInterrupt();
+    void PCF2127::enableSecoqndInterrupt();
     void PCF2127::enableMinuteInterrupt();
+    void PCF2127::setControlBit();
 
 private:
     int deviceAddr;
