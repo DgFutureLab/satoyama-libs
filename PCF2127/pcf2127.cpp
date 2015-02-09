@@ -489,7 +489,7 @@ void PCF2127::readModWriteBit(uint8_t addr, uint8_t pos, uint8_t val)
 /**************************************************************************/
 
 
-void setControlBit(uint8_t *controlByte, uint8_t registerBit, bool value){
+void PCF2127::setControlBit(uint8_t *controlByte, uint8_t registerBit, bool value){
   /*
 
   */
