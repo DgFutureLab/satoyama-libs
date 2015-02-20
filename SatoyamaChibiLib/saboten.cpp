@@ -38,13 +38,28 @@ Saboten::Saboten(){
 }
 
 void Saboten::sleep_mcu(){
- 
+  attachInterrupt(2, rtcInterrupt, FALLING);
+  delay(100);
+
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  sleep_radio(true);
+  sleep_enable();        // setting up for sleep ...
+  
+  ADCSRA &= ~(1 << ADEN);    // Disable ADC
+  sleep_mode();
+
+  sleep_disable();
+  sleep_radio(false);
 }
 
 void Saboten::sleep_radio(){
-
+	digitalWrite(hgmPin, LOW);
+    // set up chibi regs to turn off external P/A
+    chibiRegWrite(0x4, 0x20);
 }
 
 void Saboten::wakeup_radio(){
-	
+	digitalWrite(hgmPin, HIGH);
+    // set up chibi regs to turn on external P/A
+    chibiRegWrite(0x4, 0xA0);
 }
