@@ -1,4 +1,12 @@
 #include "saboten.h"
+#include <chibi.h>
+#if ARDUINO >= 100
+    #include "Arduino.h"
+#else
+    #include "WProgram.h"
+#endif
+
+#include <avr/sleep.h>
 
 /*
 IN H FILE:
@@ -30,9 +38,13 @@ Saboten::Saboten(){
 }
 
 void Saboten::sleep_mcu(){
-
+ 
 }
 
 void Saboten::sleep_radio(){
 
+}
+
+void Saboten::wakeup_radio(){
+	
 }
