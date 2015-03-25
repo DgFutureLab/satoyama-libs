@@ -22,6 +22,8 @@ void PCF2127::writeTime(uint8_t hours, uint8_t minutes, uint8_t seconds)
 
 */
 
+// void rtcInterrupt();
+
 
 class Saboten{
 	public:
@@ -37,4 +39,6 @@ class Saboten{
 		void sleep_mcu();
 		void sleep_radio();
 		void wakeup_radio();
+		void hum();
+		static void rtcInterrupt();
 };

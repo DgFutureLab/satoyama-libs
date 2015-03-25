@@ -8,33 +8,9 @@
 
 #include <avr/sleep.h>
 
-/*
-IN H FILE:
-
-PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp);
-void writeTime(uint8_t hour, uint8_t minutes, uint8_t seconds);
-
-
-IN CPP FILE:
-
-CONSTRUCTOR:
-
-PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp)
-{
-   
-}
-
-
-void PCF2127::writeTime(uint8_t hours, uint8_t minutes, uint8_t seconds)
-{
- 
-}
-
-*/
 
 
 Saboten::Saboten(){
-
 }
 
 void Saboten::sleep_mcu(){
@@ -42,14 +18,18 @@ void Saboten::sleep_mcu(){
   delay(100);
 
   set_sleep_mode(SLEEP_MODE_PWR_DOWN);
-  sleep_radio(true);
+  sleep_radio();
   sleep_enable();        // setting up for sleep ...
   
-  ADCSRA &= ~(1 << ADEN);    // Disable ADC
+  // ADCSRA &= ~(1 << ADEN);    // Disable ADC
   sleep_mode();
 
   sleep_disable();
-  sleep_radio(false);
+  wakeup_radio();
+}
+
+void Saboten::rtcInterrupt(){
+  detachInterrupt(2);
 }
 
 void Saboten::sleep_radio(){
@@ -63,3 +43,12 @@ void Saboten::wakeup_radio(){
     // set up chibi regs to turn on external P/A
     chibiRegWrite(0x4, 0xA0);
 }
+
+void Saboten::hum(){
+  int a;
+}
+
+// void Saboten::read_temperature(){
+
+
+// }
