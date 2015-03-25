@@ -21,11 +21,12 @@ void Saboten::sleep_mcu(){
   sleep_radio();
   sleep_enable();        // setting up for sleep ...
   
-  // ADCSRA &= ~(1 << ADEN);    // Disable ADC
+  ADCSRA &= ~(1 << ADEN);    // Disable ADC
   sleep_mode();
 
   sleep_disable();
   wakeup_radio();
+  ADCSRA |= (1 << ADEN); // Enable ADC
 }
 
 void Saboten::rtcInterrupt(){
@@ -43,12 +44,3 @@ void Saboten::wakeup_radio(){
     // set up chibi regs to turn on external P/A
     chibiRegWrite(0x4, 0xA0);
 }
-
-void Saboten::hum(){
-  int a;
-}
-
-// void Saboten::read_temperature(){
-
-
-// }
