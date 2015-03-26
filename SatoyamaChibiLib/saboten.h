@@ -1,6 +1,6 @@
 class Saboten{
 	public:
-		static const float ADCREFVOLTAGE = 3.3;
+		static const float ADC_REFERENCE_VOLTAGE = 3.3;
 		static const int BATTERY_VOLTAGE_PIN = 31;
 		static const int hgmPin = 14;
 		static const int sdCsPin = 15;
