@@ -27,5 +27,5 @@ class Saboten{
 	public:
 		Saboten();
 		void sleep_mcu();
-		void sleep_radio();
+		void sleep_radio(bool val);
 };
