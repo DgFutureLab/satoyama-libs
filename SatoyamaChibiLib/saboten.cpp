@@ -9,6 +9,23 @@
 #include <avr/sleep.h>
 
 
+Board::Board(){
+  this->sensors = new std::vector<BaseSensor*>(0);
+}
+
+
+void Board::register_sensor(BaseSensor *sensor){
+  this->sensors->push_back(sensor);
+}
+
+void Board::read_sensors(unsigned char *buffer){
+  int n_sensors = this->sensors->size();
+  for(int i; i<n_sensors; i++){
+    this->sensors->at(i)->read(buffer);
+  }
+}
+
+
 
 Saboten::Saboten(){
 }
