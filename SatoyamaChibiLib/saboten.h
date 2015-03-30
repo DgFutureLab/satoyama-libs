@@ -9,7 +9,7 @@ class Board{
 	public:
 		Board();
 		void register_sensor(BaseSensor *sensor);
-		virtual void read_sensors(unsigned char *buffer);
+		void read_sensors(unsigned char *buffer);
 		// virtual void read_diagnostics(unsigned char *buffer);
 		// virtual void read_values(unsigned char *buffer);
 
@@ -18,6 +18,9 @@ class Board{
 
 
 class Saboten:public Board{
+	// private:
+		// void read_battery_voltage(unsigned char *buffer);
+
 	public:
 		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
 		static constexpr int BATTERY_VOLTAGE_PIN = 31;
@@ -32,8 +35,6 @@ class Saboten:public Board{
 		void sleep_mcu();
 		void sleep_radio();
 		void wakeup_radio();
-		void read_sensors();
-		// void registerSensor(char *sensor_name, void (*func)(unsigned int buffer));
 		static void rtcInterrupt();
-		// static void register_sensor(BaseSensor sensor);
+		// void read_diagnostics(unsigned char *buffer);
 };

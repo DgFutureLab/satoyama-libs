@@ -46,6 +46,15 @@ void Saboten::sleep_mcu(){
   ADCSRA |= (1 << ADEN); // Enable ADC
 }
 
+// void Saboten::read_battery_voltage(unsigned char *buffer){
+//   // unsigned int vbat = analogRead(self->);
+//   // double batt = ((vbat/1023.0) * reference_voltage) * 2;
+//   // Reading battery_voltage = {"vbat", batt, millis()};
+//   // add_to_tx_buf_new(buffer, &battery_voltage);
+// }
+
+
+
 void Saboten::rtcInterrupt(){
   detachInterrupt(2);
 }

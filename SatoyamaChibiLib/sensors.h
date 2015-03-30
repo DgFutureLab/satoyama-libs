@@ -5,12 +5,12 @@ class BaseSensor{
 		virtual void read(unsigned char *buffer) = 0;
 };
 
-class PCF2127Sensor:public BaseSensor{
+class Paralax28015REVC_Sensor:public BaseSensor{
 	private: 
 		NewPing *sonar; // Sonar is a pointer that points to a NewPing instance
 	
 	public:
-		PCF2127Sensor(int sonar_pin);
+		Paralax28015REVC_Sensor(int sonar_pin);
 		void read(unsigned char *buffer);
 };
 

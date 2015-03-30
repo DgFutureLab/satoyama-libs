@@ -16,17 +16,37 @@ void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pi
 }
 
 
-// void read_Paralax28015REVC(unsigned char *buffer, int sonar_pin, NewPing sonar){
-// 	/*
-// 	Conmf
-// 	*/
-// 	float distance = sonar.ping() / US_ROUNDTRIP_CM; 
+  // // Read temperature
+  // float temperature = DHT.temperature;  
+  // Serial.println(temperature);
+  // if (temperature > 0) {
+  //   Reading temp = {"temperature", temperature, millis()};
+  //   add_to_tx_buf((char*)tx_buf, &temp);
+  // }
 
-//     if (distance > 0) {
-//       Reading dist = {"distance", distance, millis()};
-//       add_to_tx_buf_new((char*)tx_buf, &dist);
-//     }	
-// }
+  // // Read humidity
+  // float humidity = DHT.humidity;
+  // if (humidity > 0) {
+  //   Reading hum = {"humidity", humidity , millis()};
+  //   add_to_tx_buf((char*)tx_buf, &hum);
+  // }
+
+
+void Sensors::read_Paralax28015REVC(unsigned char *buffer, int sonar_pin, NewPing sonar){
+	/*
+	Conmf
+	*/
+	float distance = sonar.ping() / US_ROUNDTRIP_CM; 
+
+    if (distance > 0) {
+      Reading dist = {"distance", distance, millis()};
+      add_to_tx_buf_new(buffer, &dist);
+    } else{
+    	float hum = 0.1;
+    	 Reading dist = {"distance", hum, millis()};
+    	 add_to_tx_buf_new(buffer, &dist);
+    }	
+}
 
 // std::vector<BaseSensor> 
 
@@ -36,15 +56,15 @@ void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pi
 
 #include <NewPing.h>
 
-PCF2127Sensor::PCF2127Sensor(int sonar_pin){
+Paralax28015REVC_Sensor::Paralax28015REVC_Sensor(int sonar_pin){
 	this->sonar = new NewPing(sonar_pin, sonar_pin, 200);
 };
 
-void PCF2127Sensor::read(unsigned char *buffer){
+void Paralax28015REVC_Sensor::read(unsigned char *buffer){
 	float distance = (float) sonar->ping() / US_ROUNDTRIP_CM; 
 	Reading dist = {"distance", distance, millis()};
 	add_to_tx_buf_new(buffer, &dist);
-}
+};
 
 
 
