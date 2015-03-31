@@ -8,24 +8,25 @@
 
 
 #include <NewPing.h>
-
 Paralax28015REVC_Sensor::Paralax28015REVC_Sensor(int sonar_pin){
 	this->sonar = new NewPing(sonar_pin, sonar_pin, 200);
 };
 
 void Paralax28015REVC_Sensor::read(unsigned char *buffer){
 	float distance = (float) sonar->ping() / US_ROUNDTRIP_CM; 
-	Reading dist = {"distance", distance, millis()};
-	add_to_tx_buf_new(buffer, &dist);
+	if (distance > 0){
+		Reading dist = {"distance", distance, millis()};
+		add_to_tx_buf_new(buffer, &dist);
+	}
 };
 
-void Sensors::read_Paralax28015REVC(unsigned char *buffer, int sonar_pin, NewPing sonar){
-	float distance = sonar.ping() / US_ROUNDTRIP_CM; 
-    if (distance > 0) {
-      Reading dist = {"distance", distance, millis()};
-      add_to_tx_buf_new(buffer, &dist);
-    } 
-}
+// void Sensors::read_Paralax28015REVC(unsigned char *buffer, int sonar_pin, NewPing sonar){
+// 	float distance = sonar.ping() / US_ROUNDTRIP_CM; 
+//     if (distance > 0) {
+//       Reading dist = {"distance", distance, millis()};
+//       add_to_tx_buf_new(buffer, &dist);
+//     } 
+// }
 
 void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pin, float reference_voltage){
   unsigned int vbat = analogRead(battery_voltage_pin);
