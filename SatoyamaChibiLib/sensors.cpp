@@ -35,9 +35,10 @@ void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pi
   add_to_tx_buf_new(buffer, &battery_voltage);
 }
 
-// void DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
-// 	// this->sensor = new dht();
-// }
+void DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
+	int hum;
+	// this->sensor = new dht();
+}
 
   // // Read temperature
   // float temperature = DHT.temperature;  
