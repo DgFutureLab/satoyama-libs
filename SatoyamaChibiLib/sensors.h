@@ -14,11 +14,18 @@ class Paralax28015REVC_Sensor:public BaseSensor{
 		void read(unsigned char *buffer);
 };
 
-// class DHTV12_Sensor:public BaseSensor(){
-// 	private:
+#include "DHT.h"
+// #define DHTTYPE DHT11   // Type of DHT sensor, in our case we are using DHT11
+// #define DHT11_PIN A0    // Pin where the DHT11 is connected
+// dht DHT;
 
-// 	public:
-// };
+class DHT_V12_Sensor:public BaseSensor{
+	private:
+		dht temp_hum;
+	public:
+		DHT_V12_Sensor(unsigned char signal_pin);
+		void read(unsigned char *buffer);
+};
 
 
 
