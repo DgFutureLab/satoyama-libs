@@ -158,7 +158,7 @@ public:
         SATURDAY    = 6
     };
 
-    PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp);
+    PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs);
     void writeTime(uint8_t hour, uint8_t minutes, uint8_t seconds);
     void readTime(uint8_t *hour, uint8_t *minutes, uint8_t *seconds);
     void writeDate(uint8_t year, uint8_t month, uint8_t day, uint8_t weekday);

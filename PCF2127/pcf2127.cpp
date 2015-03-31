@@ -54,7 +54,7 @@
 
 */
 /**************************************************************************/
-PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t *temp)
+PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs)
 {
     uint8_t tmp;
 
@@ -76,7 +76,6 @@ PCF2127::PCF2127(uint8_t devAddr, uint8_t mode, uint8_t i2c, uint8_t cs, uint8_t
 
     tmp = 0;
     tmp = (hourMode) ? (tmp | (1<<2)) : (tmp & ~(1<<2)); 
-    *temp = tmp;
     write(PCF_CONTROL_1, tmp);
 }
 

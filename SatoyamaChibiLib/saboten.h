@@ -1,5 +1,6 @@
 #include <vector>
 #include <sensors.h>
+#include <pcf2127.h>
 
 
 class Board{
@@ -18,17 +19,19 @@ class Board{
 
 
 class Saboten:public Board{
-	// private:
-		// void read_battery_voltage(unsigned char *buffer);
+	private:
+		void read_battery_voltage(unsigned char *buffer);
 
 	public:
+		PCF2127 *rtc;
 		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
 		static constexpr int BATTERY_VOLTAGE_PIN = 31;
-		static const int hgmPin = 14;
-		static const int sdCsPin = 15;
-		static const int rtcCsPin = 28; 
+		static const int HIGH_GAIN_MODE_PIN = 14;
+		static const int SD_CHIPSELECT_PIN = 15;
+		static const int SD_DETECT_PIN = 19;
+
+		static const int RTC_CHIPSELECT_PIN = 28; 
 		static const int ledPin = 18;
-		static const int sdDetectPin = 19;
 		static const int vbatPin = 31;
 		static const int vsolPin = 29;
 		Saboten();

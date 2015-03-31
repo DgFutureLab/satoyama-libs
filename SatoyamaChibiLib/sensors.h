@@ -14,6 +14,12 @@ class Paralax28015REVC_Sensor:public BaseSensor{
 		void read(unsigned char *buffer);
 };
 
+// class DHTV12_Sensor:public BaseSensor(){
+// 	private:
+
+// 	public:
+// };
+
 
 
 class Sensors{
