@@ -27,10 +27,10 @@ void Board::read_sensors(unsigned char *buffer){
 
 
 
-Saboten::Saboten(){
+Saboten::Saboten(unsigned int serial_baud_rate){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
-  chibiCmdInit(57600);
-  
+  chibiCmdInit(serial_baud_rate);
+
   chibiInit();
 
   // set up rtc chip select

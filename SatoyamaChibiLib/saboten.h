@@ -34,7 +34,7 @@ class Saboten:public Board{
 		static const int ledPin = 18;
 		static const int vbatPin = 31;
 		static const int vsolPin = 29;
-		Saboten();
+		Saboten(unsigned int serial_baud_rate);
 		void sleep_mcu();
 		void sleep_radio();
 		void wakeup_radio();
