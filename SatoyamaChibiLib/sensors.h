@@ -21,7 +21,7 @@ class Paralax28015REVC_Sensor:public BaseSensor{
 
 class DHT_V12_Sensor:public BaseSensor{
 	private:
-		dht temp_hum;
+		dht *sensor;
 	public:
 		DHT_V12_Sensor(unsigned char signal_pin);
 		void read(unsigned char *buffer);

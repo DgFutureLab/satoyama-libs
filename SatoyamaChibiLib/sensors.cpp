@@ -20,13 +20,6 @@ void Paralax28015REVC_Sensor::read(unsigned char *buffer){
 	}
 };
 
-// void Sensors::read_Paralax28015REVC(unsigned char *buffer, int sonar_pin, NewPing sonar){
-// 	float distance = sonar.ping() / US_ROUNDTRIP_CM; 
-//     if (distance > 0) {
-//       Reading dist = {"distance", distance, millis()};
-//       add_to_tx_buf_new(buffer, &dist);
-//     } 
-// }
 
 void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pin, float reference_voltage){
   unsigned int vbat = analogRead(battery_voltage_pin);
@@ -35,36 +28,20 @@ void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pi
   add_to_tx_buf_new(buffer, &battery_voltage);
 }
 
-void DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
-	int hum;
-	// this->sensor = new dht();
+DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
+	this->sensor = new dht();
 }
 
-  // // Read temperature
-  // float temperature = DHT.temperature;  
-  // Serial.println(temperature);
-  // if (temperature > 0) {
-  //   Reading temp = {"temperature", temperature, millis()};
-  //   add_to_tx_buf((char*)tx_buf, &temp);
-  // }
+void DHT_V12_Sensor::read(unsigned char *buffer){
+  float temperature = this->sensor->temperature;  
+  if (temperature > 0) {
+    Reading temp = {"temperature", temperature, millis()};
+    add_to_tx_buf_new(buffer, &temp);
+  }
 
-  // // Read humidity
-  // float humidity = DHT.humidity;
-  // if (humidity > 0) {
-  //   Reading hum = {"humidity", humidity , millis()};
-  //   add_to_tx_buf((char*)tx_buf, &hum);
-  // }
-
-
-
-
-
-// class DHT11Sensor:public BaseSensor{
-
-// 	PCF2127Sensor(){
-// 		DHT temp(0, 0, 0, RTC_CHIPSELECT_PIN, &temp);
-	
-
-// 	}
-// };
-
+  float humidity = this->sensor->humidity;
+  if (humidity > 0) {
+    Reading hum = {"humidity", humidity , millis()};
+    add_to_tx_buf_new(buffer, &hum);
+  }
+}
