@@ -1,9 +1,7 @@
-#include <vector>
+
 #include "sensors.h"
 #include <chibi.h>
 #include <utilsawesome.h>
-
-
 
 
 
@@ -27,6 +25,7 @@ void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pi
   Reading battery_voltage = {"vbat", batt, millis()};
   add_to_tx_buf_new(buffer, &battery_voltage);
 }
+
 
 DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
 	this->sensor = new dht();

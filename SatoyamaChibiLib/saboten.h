@@ -1,7 +1,12 @@
 #include <vector>
 #include <sensors.h>
 #include <pcf2127.h>
+// #include <interfaces.h>
 
+
+class NetworkInterface{
+
+};
 
 class Board{
 	private:
@@ -10,6 +15,7 @@ class Board{
 	public:
 		Board();
 		void register_sensor(BaseSensor *sensor);
+		// void register_network_interface(NetworkInterface *interface);
 		void read_sensors(unsigned char *buffer);
 		// virtual void read_diagnostics(unsigned char *buffer);
 		// virtual void read_values(unsigned char *buffer);
