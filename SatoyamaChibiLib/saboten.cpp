@@ -33,7 +33,6 @@ Saboten::Saboten(unsigned int serial_baud_rate){
 
   chibiInit();
 
-  // set up rtc chip select
   pinMode(Saboten::RTC_CHIPSELECT_PIN, OUTPUT);
   digitalWrite(Saboten::RTC_CHIPSELECT_PIN, HIGH);
 

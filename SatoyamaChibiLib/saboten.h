@@ -5,21 +5,30 @@
 
 
 class NetworkInterface{
-
+	public:
+		void sleep_interface();
 };
 
 class Board{
 	private:
 		std::vector<BaseSensor*> *sensors; 
+		std::vector<NetworkInterface*> *network_interfaces; 
 
 	public:
 		Board();
 		void register_sensor(BaseSensor *sensor);
-		// void register_network_interface(NetworkInterface *interface);
 		void read_sensors(unsigned char *buffer);
-		// virtual void read_diagnostics(unsigned char *buffer);
-		// virtual void read_values(unsigned char *buffer);
 
+		void register_network_interface(NetworkInterface *interface);
+		void send_on_interface(NetworkInterface *interface, unsigned char *buffer);
+		void recv_on_interface(NetworkInterface *interface, unsigned char *buffer);
+		
+		// virtual void read_diagnostics(unsigned char *buffer);
+};
+
+class Chibi:public Board{
+	public:
+		Chibi(unsigned char serial_baud_rate);
 
 };
 
@@ -47,3 +56,4 @@ class Saboten:public Board{
 		static void rtcInterrupt();
 		// void read_diagnostics(unsigned char *buffer);
 };
+
