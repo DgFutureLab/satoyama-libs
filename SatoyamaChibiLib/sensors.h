@@ -28,10 +28,4 @@ class DHT_V12_Sensor:public BaseSensor{
 };
 
 
-class BatteryVoltage_Diagnostic:public BaseSensor{
-	public:
-		BatteryVoltage_Diagnostic(int mcu_pin);
-		void read(unsigned char *buffer);
-};
-
-
+void read_battery_voltage(unsigned char *buffer, int battery_voltage_pin, float reference_voltage);
