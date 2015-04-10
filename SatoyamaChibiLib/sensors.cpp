@@ -19,12 +19,13 @@ void Paralax28015REVC_Sensor::read(unsigned char *buffer){
 };
 
 
-void Sensors::read_battery_voltage(unsigned char *buffer, int battery_voltage_pin, float reference_voltage){
+void read_battery_voltage(unsigned char *buffer, int battery_voltage_pin, float reference_voltage){
   unsigned int vbat = analogRead(battery_voltage_pin);
   double batt = ((vbat/1023.0) * reference_voltage) * 2;
   Reading battery_voltage = {"vbat", batt, millis()};
   add_to_tx_buf_new(buffer, &battery_voltage);
 }
+
 
 
 DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
@@ -44,3 +45,6 @@ void DHT_V12_Sensor::read(unsigned char *buffer){
     add_to_tx_buf_new(buffer, &hum);
   }
 }
+
+
+
