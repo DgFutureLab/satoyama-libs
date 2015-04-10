@@ -1,4 +1,5 @@
 #include "saboten.h"
+#include <utilsawesome.h>
 #include <chibi.h>
 #if ARDUINO >= 100
     #include "Arduino.h"
@@ -67,12 +68,12 @@ void Saboten::sleep_mcu(){
   ADCSRA |= (1 << ADEN); // Enable ADC
 }
 
-// void Saboten::read_battery_voltage(unsigned char *buffer){
-//   // unsigned int vbat = analogRead(self->);
-//   // double batt = ((vbat/1023.0) * reference_voltage) * 2;
-//   // Reading battery_voltage = {"vbat", batt, millis()};
-//   // add_to_tx_buf_new(buffer, &battery_voltage);
-// }
+void Saboten::read_battery_voltage(unsigned char *buffer){
+  unsigned int vbat = analogRead(Saboten::BATTERY_VOLTAGE_PIN);
+  double batt = ((vbat/1023.0) * Saboten::ADC_REFERENCE_VOLTAGE) * 2;
+  Reading battery_voltage = {"vbat", batt, millis()};
+  add_to_tx_buf_new(buffer, &battery_voltage);
+}
 
 
 

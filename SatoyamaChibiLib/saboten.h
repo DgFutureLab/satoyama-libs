@@ -35,12 +35,14 @@ class Chibi:public Board{
 
 class Saboten:public Board{
 	private:
+		static constexpr int BATTERY_VOLTAGE_PIN = 31;
+		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
 		void read_battery_voltage(unsigned char *buffer);
 
 	public:
 		PCF2127 *rtc;
-		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
-		static constexpr int BATTERY_VOLTAGE_PIN = 31;
+		
+		
 		static const int HIGH_GAIN_MODE_PIN = 14;
 		static const int SD_CHIPSELECT_PIN = 15;
 		static const int SD_DETECT_PIN = 19;
