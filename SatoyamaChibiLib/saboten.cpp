@@ -68,6 +68,10 @@ void Saboten::sleep_mcu(){
   ADCSRA |= (1 << ADEN); // Enable ADC
 }
 
+void Saboten::read_board_diagnostics(unsigned char *buffer){
+  this->read_battery_voltage(buffer); 
+}
+
 void Saboten::read_battery_voltage(unsigned char *buffer){
   unsigned int vbat = analogRead(Saboten::BATTERY_VOLTAGE_PIN);
   double batt = ((vbat/1023.0) * Saboten::ADC_REFERENCE_VOLTAGE) * 2;
@@ -92,3 +96,4 @@ void Saboten::wakeup_radio(){
     // set up chibi regs to turn on external P/A
     chibiRegWrite(0x4, 0xA0);
 }
+

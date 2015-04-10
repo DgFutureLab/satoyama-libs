@@ -18,7 +18,7 @@ class Board{
 		Board();
 		void register_sensor(BaseSensor *sensor);
 		void read_sensors(unsigned char *buffer);
-
+		// virtual void read_board_diagnostics(unsigned char *buffer);
 		void register_network_interface(NetworkInterface *interface);
 		void send_on_interface(NetworkInterface *interface, unsigned char *buffer);
 		void recv_on_interface(NetworkInterface *interface, unsigned char *buffer);
@@ -39,6 +39,7 @@ class Saboten:public Board{
 		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
 		void read_battery_voltage(unsigned char *buffer);
 
+
 	public:
 		PCF2127 *rtc;
 		
@@ -51,11 +52,18 @@ class Saboten:public Board{
 		static const int ledPin = 18;
 		static const int vbatPin = 31;
 		static const int vsolPin = 29;
+		static void rtcInterrupt();
+		
 		Saboten(unsigned int serial_baud_rate);
+		
+		// void read_board_diagnostics(unsigned char *buffer);
 		void sleep_mcu();
 		void sleep_radio();
 		void wakeup_radio();
-		static void rtcInterrupt();
+
+		void read_board_diagnostics(unsigned char *buffer);
+		
+
 		// void read_diagnostics(unsigned char *buffer);
 };
 
