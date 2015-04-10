@@ -18,12 +18,13 @@ class Board{
 		Board();
 		void register_sensor(BaseSensor *sensor);
 		void read_sensors(unsigned char *buffer);
-		// virtual void read_board_diagnostics(unsigned char *buffer);
+		virtual void read_board_diagnostics(unsigned char *buffer) = 0;
+		
+
 		void register_network_interface(NetworkInterface *interface);
 		void send_on_interface(NetworkInterface *interface, unsigned char *buffer);
 		void recv_on_interface(NetworkInterface *interface, unsigned char *buffer);
 		
-		// virtual void read_diagnostics(unsigned char *buffer);
 };
 
 class Chibi:public Board{
@@ -53,17 +54,21 @@ class Saboten:public Board{
 		static const int vbatPin = 31;
 		static const int vsolPin = 29;
 		static void rtcInterrupt();
-		
+
 		Saboten(unsigned int serial_baud_rate);
 		
-		// void read_board_diagnostics(unsigned char *buffer);
+		/*
+		Functions that implement Board interface
+		*/
+		void read_board_diagnostics(unsigned char *buffer);
+		
+		/*
+		Saboten specific functions
+		*/
+
 		void sleep_mcu();
 		void sleep_radio();
 		void wakeup_radio();
 
-		void read_board_diagnostics(unsigned char *buffer);
-		
-
-		// void read_diagnostics(unsigned char *buffer);
 };
 
