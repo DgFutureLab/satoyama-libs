@@ -20,7 +20,7 @@
   v1.0    - Initial release
 */
 /**************************************************************************/
-#include "Adafruit_CC3000.h"
+#include "Adafruit_CC3000-yms.h"
 #include "ccspi.h"
 
 #include "utility/cc3000_common.h"
@@ -1689,26 +1689,12 @@ void Adafruit_CC3000::setPrinter(Print* p) {
 //
 // HTTP requests
 //
-// by Yukitoshi Minami
+// by Minami
 // 2015.04
 //
 /////////////////////
 
-/////////////////////
-//
-// POST requests
-//
-// ip = 0 -> will get ip from host name (getHostByName)
-// otherwise, ip should be in HEX, all together
-// ex. 255.255.255.255 -> ip = 0xFFFFFFFF;
-//
-//
-// by Yukitoshi Minami
-// 2015.04
-//
-/////////////////////
-
-void Adafruit_CC3000::postData(char * data, char * WEBSITE, char * WEBPAGE, uint32_t ip, uint32_t IDLE_TIMEOUT_MS) {
+void Adafruit_CC3000::postData(char * data, char * WEBSITE, char * WEBPAGE, uint32_t ip, uint8_t IDLE_TIMEOUT_MS) {
   // Try looking up the website's IP address
   if(ip == 0) {
     // ip = 0;
@@ -1733,20 +1719,31 @@ void Adafruit_CC3000::postData(char * data, char * WEBSITE, char * WEBPAGE, uint
     Serial.println("connecting...");
 
     client.fastrprint(F("POST "));
+    //    Serial.println("POST");
     client.fastrprint(WEBPAGE);
+    //    Serial.println(WEBPAGE);
     client.fastrprint(F(" HTTP/1.1\r\n"));
+    //    Serial.println(" HTTP/1.1\r\n");
     client.fastrprint(F("Host: ")); 
+    //    Serial.println("Host: ");
     client.fastrprint(WEBSITE); 
+    //    Serial.println(WEBSITE);
     client.fastrprint(F("\r\n"));
+    //    Serial.println("\r\n");
     client.fastrprint(F("User-Agent: Arduino/1.0"));
+    //    Serial.println("User-Agent: Arduino/1.0");
     client.fastrprint(F("\r\n"));        
+    //    Serial.println("\r\n");
     client.fastrprint(F("Connection: close"));
+    //    Serial.println("Connection: close");
 
 //    client.fastrprint(F("Content-Length: "));
 //    client.fastrprint(F(data.length()));
-//    client.fastrprint(F("Content-Type: application/x-www-form-urlencoded;"))
+    //    client.fastrprint(F("Content-Type: application/x-www-form-urlencoded;"))
     client.fastrprint(F("\r\n"));
     client.println(data);  // !!! There seems to be a limit to the MAX length of the message !!!
+    //    Serial.println(data);
+//        client.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");     
 
     client.println();
 
@@ -1778,20 +1775,8 @@ void Adafruit_CC3000::postData(char * data, char * WEBSITE, char * WEBPAGE, uint
 
 }
 
-/////////////////////
-//
-// GET requests
-//
-// ip = 0 -> will get ip from host name (getHostByName)
-// otherwise, ip should be in HEX, all together
-// ex. 255.255.255.255 -> ip = 0xFFFFFFFF;
-//
-// by Yukitoshi Minami
-// 2015.04
-//
-/////////////////////
 
-void Adafruit_CC3000::getData(char * WEBSITE, char * WEBPAGE, uint32_t ip, uint32_t IDLE_TIMEOUT_MS) {
+void Adafruit_CC3000::getData(char * WEBSITE, char * WEBPAGE, uint32_t ip, uint8_t IDLE_TIMEOUT_MS) {
   // Try looking up the website's IP address
   if(ip == 0) {
     // ip = 0;

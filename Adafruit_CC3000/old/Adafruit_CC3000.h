@@ -186,9 +186,9 @@ class Adafruit_CC3000 {
 
     void setPrinter(Print*);
 
-    // HTTP requests by Yukitoshi Minami 2015.04
-    void postData(char * data, char * WEBSITE, char * WEBPAGE, uint32_t ip, uint32_t IDLE_TIMEOUT_MS);
-    void getData(char * WEBSITE, char * WEBPAGE, uint32_t ip, uint32_t IDLE_TIMEOUT_MS);
+    // HTTP requests by Minami 2015.04
+    void postData(char * data, char * WEBSITE, char * WEBPAGE, uint32_t ip, uint8_t IDLE_TIMEOUT_MS);
+    void getData(char * WEBSITE, char * WEBPAGE, uint32_t ip, uint8_t IDLE_TIMEOUT_MS);
 
   private:
     bool _initialised;
