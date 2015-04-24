@@ -32,7 +32,8 @@ Saboten::Saboten(unsigned int serial_baud_rate){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
   chibiCmdInit(serial_baud_rate);
 
-  chibiInit();
+  pinMode(Saboten::HIGH_GAIN_MODE_PIN, OUTPUT);
+  digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, LOW);
 
   pinMode(Saboten::RTC_CHIPSELECT_PIN, OUTPUT);
   digitalWrite(Saboten::RTC_CHIPSELECT_PIN, HIGH);
@@ -43,13 +44,18 @@ Saboten::Saboten(unsigned int serial_baud_rate){
   pinMode(Saboten::SD_DETECT_PIN, INPUT);
   digitalWrite(Saboten::SD_DETECT_PIN, LOW);
 
-  pinMode(Saboten::HIGH_GAIN_MODE_PIN, OUTPUT);
-  digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, LOW);
+  
 
   this->rtc->enableMinuteInterrupt();
   // this->rtc->enableSecondInterrupt();
   this->rtc->setInterruptToPulse();
   attachInterrupt(2, this->rtcInterrupt, FALLING);
+
+  chibiInit();
+  //  set up chibi regs for external P/A
+  chibiRegWrite(0x4, 0xA0);
+  // high gain mode
+  digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, HIGH);
 }
 
 void Saboten::sleep_mcu(){
@@ -87,13 +93,15 @@ void Saboten::rtcInterrupt(){
 
 void Saboten::sleep_radio(){
 	digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, LOW);
-    // set up chibi regs to turn off external P/A
-    chibiRegWrite(0x4, 0x20);
+  // set up chibi regs to turn off external P/A
+  chibiRegWrite(0x4, 0x20);
+  chibiSleepRadio(1);  
 }
 
 void Saboten::wakeup_radio(){
 	digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, HIGH);
-    // set up chibi regs to turn on external P/A
-    chibiRegWrite(0x4, 0xA0);
+  // set up chibi regs to turn on external P/A
+  chibiRegWrite(0x4, 0xA0);
+  chibiSleepRadio(0);
 }
 

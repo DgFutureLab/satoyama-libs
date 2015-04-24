@@ -12,7 +12,9 @@ Paralax28015REVC_Sensor::Paralax28015REVC_Sensor(int sonar_pin){
 
 void Paralax28015REVC_Sensor::read(unsigned char *buffer){
 	float distance = (float) sonar->ping() / US_ROUNDTRIP_CM; 
-	if (distance > 0){
+	Serial.print("DISTANCE: ");
+  Serial.println(distance);
+  if (distance > 0){
 		Reading dist = {"distance", distance, millis()};
 		add_to_tx_buf_new(buffer, &dist);
 	}
@@ -33,6 +35,7 @@ DHT_V12_Sensor::DHT_V12_Sensor(unsigned char signal_pin){
 }
 
 void DHT_V12_Sensor::read(unsigned char *buffer){
+  Serial.println("AAAAAAAAAA");
   float temperature = this->sensor->temperature;  
   if (temperature > 0) {
     Reading temp = {"temperature", temperature, millis()};
