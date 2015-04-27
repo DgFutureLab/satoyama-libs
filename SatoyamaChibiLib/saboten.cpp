@@ -30,7 +30,7 @@ void Board::read_sensors(unsigned char *buffer){
 
 Saboten::Saboten(unsigned int serial_baud_rate){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
-  chibiCmdInit(serial_baud_rate);
+  // chibiCmdInit(serial_baud_rate);
 
   pinMode(Saboten::HIGH_GAIN_MODE_PIN, OUTPUT);
   digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, LOW);
