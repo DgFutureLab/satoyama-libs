@@ -1,6 +1,7 @@
 #include <vector>
 #include <sensors.h>
 #include <pcf2127.h>
+#include <string>
 // #include <interfaces.h>
 
 
@@ -13,7 +14,6 @@ class Board{
 	private:
 		std::vector<BaseSensor*> *sensors; 
 		std::vector<NetworkInterface*> *network_interfaces; 
-
 	public:
 		Board();
 		void register_sensor(BaseSensor *sensor);
@@ -38,6 +38,7 @@ class Saboten:public Board{
 	private:
 		static constexpr int BATTERY_VOLTAGE_PIN = 31;
 		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
+
 		void read_battery_voltage(unsigned char *buffer);
 
 
@@ -56,7 +57,9 @@ class Saboten:public Board{
 		static void rtcInterrupt();
 
 		Saboten(unsigned int serial_baud_rate);
-		
+		char* timestamp();
+		void set_datetime(int year, int month, int day, int hour, int minute, int second);
+
 		/*
 		Functions that implement Board interface
 		*/

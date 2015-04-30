@@ -28,6 +28,7 @@ void Board::read_sensors(unsigned char *buffer){
 
 
 
+
 Saboten::Saboten(unsigned int serial_baud_rate){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
   // chibiCmdInit(serial_baud_rate);
@@ -74,6 +75,27 @@ void Saboten::sleep_mcu(){
   ADCSRA |= (1 << ADEN); // Enable ADC
 }
 
+char* Saboten::timestamp(){
+  unsigned char year;
+  unsigned char month;
+  unsigned char day;
+  unsigned char weekday;
+  this->rtc->readDate(&year, &month, &day, &weekday);
+  unsigned char hour;
+  unsigned char minute;
+  unsigned char second;
+  this->rtc->readTime(&hour, &minute, &second);
+  
+  char s[19];
+  sprintf(s, "%d-%d-%d %d:%d:%d", year, month, day, hour, minute, second);
+  return s;
+};
+
+void Saboten::set_datetime(int year, int month, int day, int hour, int minute, int second){
+  this->rtc->writeTime(hour, minute, second);
+  this->rtc->writeDate(year, month, day, 0);
+};
+
 void Saboten::read_board_diagnostics(unsigned char *buffer){
   this->read_battery_voltage(buffer); 
 }
@@ -81,8 +103,8 @@ void Saboten::read_board_diagnostics(unsigned char *buffer){
 void Saboten::read_battery_voltage(unsigned char *buffer){
   unsigned int vbat = analogRead(Saboten::BATTERY_VOLTAGE_PIN);
   double batt = ((vbat/1023.0) * Saboten::ADC_REFERENCE_VOLTAGE) * 2;
-  Reading battery_voltage = {"vbat", batt, millis()};
-  add_to_tx_buf_new(buffer, &battery_voltage);
+  Reading_new battery_voltage = {"vbat", batt, this->timestamp()};
+  add_to_tx_buf_new_new(buffer, &battery_voltage);
 }
 
 
