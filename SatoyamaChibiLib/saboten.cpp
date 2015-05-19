@@ -1,11 +1,11 @@
 #include "saboten.h"
 #include <utilsawesome.h>
 #include <chibi.h>
-#if ARDUINO >= 100
-    #include "Arduino.h"
-#else
-    #include "WProgram.h"
-#endif
+// #if ARDUINO >= 100
+//     #include "Arduino.h"
+// #else
+//     #include "WProgram.h"
+// #endif
 
 #include <avr/sleep.h>
 
@@ -126,4 +126,50 @@ void Saboten::wakeup_radio(){
   chibiRegWrite(0x4, 0xA0);
   chibiSleepRadio(0);
 }
+
+
+
+
+
+Chibi::Chibi(unsigned int serial_baud_rate){
+  // this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
+  // chibiCmdInit(serial_baud_rate);
+
+  // pinMode(Saboten::HIGH_GAIN_MODE_PIN, OUTPUT);
+  // digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, LOW);
+
+  // pinMode(Saboten::RTC_CHIPSELECT_PIN, OUTPUT);
+  // digitalWrite(Saboten::RTC_CHIPSELECT_PIN, HIGH);
+
+  // pinMode(Saboten::SD_CHIPSELECT_PIN, INPUT);
+  // digitalWrite(Saboten::SD_CHIPSELECT_PIN, HIGH);
+
+  // pinMode(Saboten::SD_DETECT_PIN, INPUT);
+  // digitalWrite(Saboten::SD_DETECT_PIN, LOW);
+
+  
+
+  // this->rtc->enableMinuteInterrupt();
+  // // this->rtc->enableSecondInterrupt();
+  // this->rtc->setInterruptToPulse();
+  // attachInterrupt(2, this->rtcInterrupt, FALLING);
+
+  chibiInit();
+  //  set up chibi regs for external P/A
+  // chibiRegWrite(0x4, 0xA0);
+  // // high gain mode
+  // digitalWrite(Saboten::HIGH_GAIN_MODE_PIN, HIGH);
+}
+
+void Chibi::read_board_diagnostics(unsigned char *buffer){
+  this->read_battery_voltage(buffer); 
+}
+
+void Chibi::read_battery_voltage(unsigned char *buffer){
+  unsigned int vbat = analogRead(Chibi::BATTERY_VOLTAGE_PIN);
+  double batt = ((vbat/1023.0) * Chibi::ADC_REFERENCE_VOLTAGE) * 2;
+  Reading_new battery_voltage = {"vbat", batt, 0};
+  add_to_tx_buf_new_new(buffer, &battery_voltage);
+}
+
 
