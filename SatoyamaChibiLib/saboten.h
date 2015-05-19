@@ -36,8 +36,8 @@ class Chibi:public Board{
 
 class Saboten:public Board{
 	private:
-		static constexpr int BATTERY_VOLTAGE_PIN = 31;
-		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
+		static const int BATTERY_VOLTAGE_PIN = 31;
+		static const float ADC_REFERENCE_VOLTAGE = 3.3;
 
 		void read_battery_voltage(unsigned char *buffer);
 
