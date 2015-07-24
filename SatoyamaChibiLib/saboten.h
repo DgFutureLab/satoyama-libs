@@ -14,6 +14,7 @@ class Board{
 	private:
 		std::vector<BaseSensor*> *sensors; 
 		std::vector<NetworkInterface*> *network_interfaces; 
+		int node_id;
 	public:
 		Board();
 		void register_sensor(BaseSensor *sensor);
@@ -31,8 +32,8 @@ class Board{
 
 class Saboten:public Board{
 	private:
-		static const int BATTERY_VOLTAGE_PIN = 31;
-		static const float ADC_REFERENCE_VOLTAGE = 3.3;
+		static constexpr int BATTERY_VOLTAGE_PIN = 31;
+		static constexpr float ADC_REFERENCE_VOLTAGE = 3.3;
 
 		void read_battery_voltage(unsigned char *buffer);
 
@@ -51,7 +52,7 @@ class Saboten:public Board{
 		static const int vsolPin = 29;
 		static void rtcInterrupt();
 
-		Saboten(unsigned int serial_baud_rate);
+		Saboten(unsigned int node_id, unsigned int serial_baud_rate);
 		char* timestamp();
 		void set_datetime(int year, int month, int day, int hour, int minute, int second);
 

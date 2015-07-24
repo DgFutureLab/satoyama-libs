@@ -11,6 +11,7 @@
 
 
 Board::Board(){
+  this->node_id = node_id;
   this->sensors = new std::vector<BaseSensor*>(0);
 }
 
@@ -29,7 +30,7 @@ void Board::read_sensors(unsigned char *buffer){
 
 
 
-Saboten::Saboten(unsigned int serial_baud_rate){
+Saboten::Saboten(unsigned int node_id, unsigned int serial_baud_rate){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
   // chibiCmdInit(serial_baud_rate);
 
