@@ -14,9 +14,10 @@ class Board{
 	private:
 		std::vector<BaseSensor*> *sensors; 
 		std::vector<NetworkInterface*> *network_interfaces; 
-		int node_id;
+		
 	public:
-		Board();
+		int node_id;
+		Board(unsigned int node_id);
 		void register_sensor(BaseSensor *sensor);
 		void read_sensors(unsigned char *buffer);
 		virtual void read_board_diagnostics(unsigned char *buffer) = 0;
@@ -93,7 +94,7 @@ class Chibi:public Board{
 		static const int vsolPin = 29;
 		static void rtcInterrupt();
 
-		Chibi(unsigned int serial_baud_rate);
+		Chibi(unsigned int node_id, unsigned int serial_baud_rate);
 		// char* timestamp();
 		// void set_datetime(int year, int month, int day, int hour, int minute, int second);
 

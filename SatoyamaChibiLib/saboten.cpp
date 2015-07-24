@@ -10,8 +10,8 @@
 #include <avr/sleep.h>
 
 
-Board::Board(){
-  this->node_id = node_id;
+Board::Board(unsigned int node_id){
+  // this->node_id = node_id;
   this->sensors = new std::vector<BaseSensor*>(0);
 }
 
@@ -30,7 +30,7 @@ void Board::read_sensors(unsigned char *buffer){
 
 
 
-Saboten::Saboten(unsigned int node_id, unsigned int serial_baud_rate){
+Saboten::Saboten(unsigned int node_id, unsigned int serial_baud_rate):Board(node_id){
   this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
   // chibiCmdInit(serial_baud_rate);
 
@@ -132,7 +132,7 @@ void Saboten::wakeup_radio(){
 
 
 
-Chibi::Chibi(unsigned int serial_baud_rate){
+Chibi::Chibi(unsigned int node_id, unsigned int serial_baud_rate):Board(node_id){
   // this->rtc = new PCF2127(0, 0, 0, Saboten::RTC_CHIPSELECT_PIN);
   // chibiCmdInit(serial_baud_rate);
 
