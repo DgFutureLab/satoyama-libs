@@ -12,6 +12,7 @@
 
 Board::Board(unsigned int node_id){
   // this->node_id = node_id;
+  this->node_id = node_id;
   this->sensors = new std::vector<BaseSensor*>(0);
 }
 
