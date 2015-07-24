@@ -8,7 +8,14 @@
 // #endif
 
 #include <avr/sleep.h>
+#include <SPI.h>
+#include <SdFat.h>
 
+
+#define FILENAME "data.txt"
+
+SdFat sd;
+SdFile myFile;
 
 Board::Board(unsigned int node_id){
   // this->node_id = node_id;
@@ -128,6 +135,67 @@ void Saboten::wakeup_radio(){
   chibiRegWrite(0x4, 0xA0);
   chibiSleepRadio(0);
 }
+
+void Saboten::sd_init(){
+// set up sd card detect
+  pinMode(Saboten::SD_DETECT_PIN, INPUT);
+  digitalWrite(Saboten::SD_DETECT_PIN, HIGH);
+  // delay(1000);
+  // check for SD and init
+  int sdDetect = digitalRead(Saboten::SD_DETECT_PIN);
+  // Serial.println(sdDetect);
+  if (sdDetect == 0){
+    // init the SD card
+    if (!sd.begin(Saboten::SD_CHIPSELECT_PIN)){
+      
+      Serial.println("Card failed, or not present");
+      sd.initErrorHalt();
+      return;
+    }
+    Serial.println("SD Card is initialized.\n");
+  }
+  else{
+    Serial.println("No SD card detected.\n");
+  }
+
+}
+
+
+void Saboten::sd_write(unsigned char *buffer){    
+    int open_success = myFile.open(FILENAME, O_RDWR | O_CREAT | O_AT_END);
+    // Serial.print("Open file: ");
+    // Serial.println(open_success);
+    if (open_success){
+      // std::string str(buffer);
+      
+      char data[100];
+      strcpy(data, (char*) buffer);
+      Serial.println("Writing data to SD card ");
+      // Serial.println(data); 
+      // int n = sizeof(buffer);
+      // Serial.println(n);
+
+      
+      myFile.println(data);
+
+      // char * ptr;
+      // char array[10];
+      // // Populate ptr
+      // ptr = "10234";
+      // // Copy from ptr to array.
+      // strcpy(array, ptr);      
+      // Serial.println("Wrote data");
+
+      myFile.close();
+      Serial.println("Closed file");
+     
+    }
+    else{
+      Serial.println("Error opening dataFile");
+    }
+}
+
+
 
 
 

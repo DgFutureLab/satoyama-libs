@@ -2,6 +2,8 @@
 #include <sensors.h>
 #include <pcf2127.h>
 #include <string>
+#include <SPI.h>
+#include <SdFat.h>
 // #include <interfaces.h>
 
 
@@ -56,6 +58,9 @@ class Saboten:public Board{
 		Saboten(unsigned int node_id, unsigned int serial_baud_rate);
 		char* timestamp();
 		void set_datetime(int year, int month, int day, int hour, int minute, int second);
+
+		void sd_init();
+		void sd_write(unsigned char *buffer);
 
 		/*
 		Functions that implement Board interface

@@ -2,6 +2,8 @@
 
 class BaseSensor{
 	public: 
+		BaseSensor(unsigned int sensor_id);
+		unsigned int sensor_id;
 		virtual void read(unsigned char *buffer) = 0;
 };
 
@@ -10,7 +12,7 @@ class Paralax28015REVC_Sensor:public BaseSensor{
 		NewPing *sonar; // Sonar is a pointer that points to a NewPing instance
 	
 	public:
-		Paralax28015REVC_Sensor(int sonar_pin);
+		Paralax28015REVC_Sensor(unsigned int sensor_id, int sonar_pin);
 		void read(unsigned char *buffer);
 };
 
@@ -23,7 +25,7 @@ class DHT_V12_Sensor:public BaseSensor{
 	private:
 		dht *sensor;
 	public:
-		DHT_V12_Sensor(unsigned char signal_pin);
+		DHT_V12_Sensor(unsigned int sensor_id, unsigned char signal_pin);
 		void read(unsigned char *buffer);
 };
 
