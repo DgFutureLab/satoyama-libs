@@ -5,21 +5,18 @@ extern "C" {
 
 
 
+
 typedef struct Reading{
-	char *name;
-	double value;
-	long timestamp;
-};
+        unsigned int node_id;
+        unsigned int sensor_id;
+        double value;
+        
+        char timestamp[20]; // Ex. "2015-09-22 21:54:53"
+} Reading;
 
-typedef struct Reading_new{
-	char *name;
-	double value;
-	char* timestamp;
-};
+void append(char *buf, Reading r)
 
-void add_to_tx_buf(char *tx_buf, struct Reading *reading);
-void add_to_tx_buf_new(unsigned char *tx_buf, struct Reading *reading);
-void add_to_tx_buf_new_new(unsigned char *tx_buf, struct Reading_new *reading);
+
 
 #ifdef __cplusplus
 }
