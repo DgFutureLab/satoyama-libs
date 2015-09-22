@@ -14,10 +14,10 @@
  *
  */
 
-void append(char *buf, Reading r){
+void append_reading(char *buf, Reading *r){
     char size = sizeof(r);
     char tmp[size];
     memset(tmp, 0, size);
-    sprintf(tmp, "%u,%u,%.2f,%s;", r.node_id, r.sensor_id, r.value, r.timestamp);
+    sprintf(tmp, "%u,%u,%.2f,%s;", r->node_id, r->sensor_id, r->value, r->timestamp);
     strcat(buf, tmp);
 }

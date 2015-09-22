@@ -11,7 +11,7 @@ extern "C" {
         char timestamp[20];
     } Reading;
 
-    void append(char *buf, Reading r);
+    void append_reading(char *buf, Reading *r);
 
 
 #ifdef __cplusplus
